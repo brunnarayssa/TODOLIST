@@ -1,19 +1,20 @@
 import React from "react";
 
 const Input = (props) => {
-    return (
-        <input id='input-field' type="text"
-					onChange={(ev) => {props.setVar(ev.target.value)}}
-					value={props.value}
+    
+    const handleKeyUp = (event) => {
+        if(event.key === "Enter"){
+            if(event.target.value.length===0){
+                props.addTask()
+            }
+            else{
+                props.addTask(event.target.value)
+                event.target.value="";
+            }
+        }
+    }
 
-					onKeyDown={(ev) => {
-						if (ev.key === "Enter") {
-							props.setToDos(props.value);
-							props.setVar('')
-						}}}
-
-					placeholder="What do you need to do?"></input>
-    )
-};
+    return <input type="text" onKeyUp={handleKeyUp}/>
+}
 
 export default Input;
